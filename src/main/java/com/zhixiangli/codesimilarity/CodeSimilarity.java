@@ -3,6 +3,7 @@
  */
 package com.zhixiangli.codesimilarity;
 
+import com.zhixiangli.codesimilarity.common.CodeUtils;
 import com.zhixiangli.codesimilarity.common.SimilarityConstants;
 
 /**
@@ -44,7 +45,7 @@ public class CodeSimilarity {
         if (null == a || null == b) {
             return 0;
         }
-        return smililarityAlg.get(a, b);
+        return smililarityAlg.get(CodeUtils.removeComment(a), CodeUtils.removeComment(b));
     }
     
 }

@@ -7,7 +7,7 @@ import com.zhixiangli.codesimilarity.SimilarityAlg;
 import com.zhixiangli.codesimilarity.common.CodeUtils;
 
 /**
- * calculate longest common subsequence
+ * calculate longest common subsequence of two codes
  * 
  * @author lizhixiang
  *
@@ -22,12 +22,12 @@ public class LCS implements SimilarityAlg {
      */
     @Override
     public double get(String a, String b) {
-        String s = CodeUtils.removeBlank(CodeUtils.removeComment(a));
+        String s = CodeUtils.removeBlank(a);
         if (0 == s.length()) {
             return 0;
         }
         
-        String t = CodeUtils.removeBlank(CodeUtils.removeComment(b));
+        String t = CodeUtils.removeBlank(b);
         if (0 == t.length()) {
             return 0;
         }
