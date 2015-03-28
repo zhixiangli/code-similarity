@@ -43,7 +43,7 @@ public class CosineSimilarity implements SimilarityAlg {
             return 0;
         }
         
-        return getCosine(getOccurrence(x), getOccurrence(y));
+        return this.getCosine(this.getOccurrence(x), this.getOccurrence(y));
     }
     
     /**
@@ -72,7 +72,7 @@ public class CosineSimilarity implements SimilarityAlg {
      * @return the number of occurrences of each strings
      */
     private Map<String, Integer> getOccurrence(List<String> list) {
-        return list.stream().collect(
+        return list.parallelStream().collect(
             Collectors.groupingBy(str -> str, Collectors.summingInt(str -> 1)));
     }
     
@@ -87,13 +87,13 @@ public class CosineSimilarity implements SimilarityAlg {
      * @return cosine value
      */
     private double getCosine(Map<String, Integer> x, Map<String, Integer> y) {
-        double up = x.keySet().stream().filter(key -> y.get(key) != null)
+        double up = x.keySet().parallelStream().filter(key -> null != y.get(key))
             .collect(Collectors.summarizingDouble(key -> 1.0 * x.get(key) * y.get(key))).getSum();
         
-        double a = x.keySet().stream()
+        double a = x.keySet().parallelStream()
             .collect(Collectors.summarizingDouble(key -> 1.0 * x.get(key) * x.get(key))).getSum();
         
-        double b = y.keySet().stream()
+        double b = y.keySet().parallelStream()
             .collect(Collectors.summarizingDouble(key -> 1.0 * y.get(key) * y.get(key))).getSum();
         
         return up / Math.sqrt(a * b);

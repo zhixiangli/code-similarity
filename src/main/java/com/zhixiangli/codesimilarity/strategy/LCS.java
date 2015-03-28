@@ -31,7 +31,7 @@ public class LCS implements SimilarityAlg {
         if (0 == t.length()) {
             return 0;
         }
-        return 2.0 * getLCS(s, t) / (s.length() + t.length());
+        return 2.0 * this.getLCS(s, t) / (s.length() + t.length());
     }
     
     /**
