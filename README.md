@@ -2,7 +2,7 @@ code-similarity
 ===============
 
 
-***[Chinese version](http://www.zhixiangli.com/2014/12/19/代码相似度检测)***
+***[Chinese version](http://www.zhixiangli.com)***
 
 
 Provides a simple interface which implements code similarity detection.
