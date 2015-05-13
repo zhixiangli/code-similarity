@@ -10,7 +10,7 @@ package com.zhixiangli.codesimilarity;
  * @author lizhixiang
  *
  */
-public class SimilarityAlgFactory {
+public class SimilarityAlgorithmFactory {
     
     /**
      * 
@@ -20,14 +20,14 @@ public class SimilarityAlgFactory {
      *            class name
      * @return the algorithm of similarity
      */
-    public static SimilarityAlg getInstance(String className) {
+    public static SimilarityAlgorithm getInstance(String className) {
         if (null == className) {
             throw new IllegalArgumentException("className is null.");
         }
         try {
             Class<?> smililarityAlg = Class.forName(className);
-            if (SimilarityAlg.class.isAssignableFrom(smililarityAlg)) {
-                return (SimilarityAlg) smililarityAlg.newInstance();
+            if (SimilarityAlgorithm.class.isAssignableFrom(smililarityAlg)) {
+                return (SimilarityAlgorithm) smililarityAlg.newInstance();
             } else {
                 throw new IllegalArgumentException("className = " + className);
             }

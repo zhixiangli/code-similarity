@@ -8,11 +8,11 @@ code-similarity
 Provides a simple interface which implements code similarity detection.
 
 
-##environmental requirements
+##Environmental Requirements
 
 JDK 1.8+
 
 
-##instructions
+##Instructions
 
 see demo in ***[code-similarity](https://github.com/zhixiangli/code-similarity)***

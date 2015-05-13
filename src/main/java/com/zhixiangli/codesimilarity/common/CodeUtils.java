@@ -3,6 +3,10 @@
  */
 package com.zhixiangli.codesimilarity.common;
 
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * utils to process source code
  * 
@@ -19,15 +23,34 @@ public class CodeUtils {
      *            source code before processing
      * @return source code after processing
      */
-    public static String removeComment(String before) {
+    public static String removeComments(String before) {
+        return CodeUtils.removeSingleLineComments(CodeUtils.removeBlockComments(before));
+    }
+    
+    public static String removeBlockComments(String before) {
         StringBuilder after = new StringBuilder();
-        
-        // remove "//"
         int size = before.length();
-        for (int i = 0; i < size; i++) {
+        int flag = 0;
+        for (int i = 0; i < size; ++i) {
+            if (i < size - 1 && before.charAt(i) == '/' && before.charAt(i + 1) == '*') {
+                ++flag;
+            } else if (i > 0 && before.charAt(i - 1) == '*' && before.charAt(i) == '/') {
+                --flag;
+            } else if (flag == 0) {
+                after.append(before.charAt(i));
+            }
+        }
+        return after.toString();
+    }
+    
+    public static String removeSingleLineComments(String before) {
+        StringBuilder after = new StringBuilder();
+        int size = before.length();
+        for (int i = 0; i < size; ++i) {
             if (i < size - 1 && before.charAt(i) == '/' && before.charAt(i + 1) == '/') {
-                for (i++; i < size; i++) {
-                    if (before.charAt(i) == '\n') {
+                for (++i; i < size; ++i) {
+                    String charString = String.valueOf(before.charAt(i));
+                    if (StringUtils.LF.equals(charString) || StringUtils.CR.equals(charString)) {
                         break;
                     }
                 }
@@ -35,21 +58,6 @@ public class CodeUtils {
                 after.append(before.charAt(i));
             }
         }
-        String tmp = after.toString();
-        after.delete(0, after.length());
-        
-        size = tmp.length();
-        int flag = 0;
-        for (int i = 0; i < size; i++) {
-            if (i < size - 1 && tmp.charAt(i) == '/' && tmp.charAt(i + 1) == '*') {
-                ++flag;
-            } else if (i > 0 && tmp.charAt(i - 1) == '*' && tmp.charAt(i) == '/') {
-                --flag;
-            } else if (flag == 0) {
-                after.append(tmp.charAt(i));
-            }
-        }
-        
         return after.toString();
     }
     
@@ -62,14 +70,10 @@ public class CodeUtils {
      * @return source code after processing
      */
     public static String removeBlank(String before) {
-        StringBuilder after = new StringBuilder();
-        int size = before.length();
-        for (int i = 0; i < size; i++) {
-            char ch = before.charAt(i);
-            if (' ' < ch && ch < Byte.MAX_VALUE) {
-                after.append(ch);
-            }
+        if (StringUtils.isEmpty(before)) {
+            return before;
         }
-        return after.toString();
+        return before.codePoints().filter(x -> !Character.isWhitespace(x))
+            .mapToObj(x -> String.valueOf((char) x)).collect(Collectors.joining());
     }
 }

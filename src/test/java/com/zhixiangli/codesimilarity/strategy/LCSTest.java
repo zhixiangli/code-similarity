@@ -5,13 +5,10 @@ package com.zhixiangli.codesimilarity.strategy;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.zhixiangli.codesimilarity.SimilarityAlg;
+import com.zhixiangli.codesimilarity.SimilarityAlgorithm;
 
 /**
  * @author lizhixiang
@@ -19,7 +16,7 @@ import com.zhixiangli.codesimilarity.SimilarityAlg;
  */
 public class LCSTest {
     
-    private SimilarityAlg alg;
+    private SimilarityAlgorithm alg;
     
     @Test
     public void testGet() {
@@ -57,29 +54,9 @@ public class LCSTest {
     /**
      * @throws java.lang.Exception
      */
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-    }
-    
-    /**
-     * @throws java.lang.Exception
-     */
-    @AfterClass
-    public static void tearDownAfterClass() throws Exception {
-    }
-    
-    /**
-     * @throws java.lang.Exception
-     */
     @Before
     public void setUp() throws Exception {
         alg = new LCS();
     }
     
-    /**
-     * @throws java.lang.Exception
-     */
-    @After
-    public void tearDown() throws Exception {
-    }
 }

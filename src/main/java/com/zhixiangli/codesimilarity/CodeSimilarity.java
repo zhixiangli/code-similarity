@@ -3,6 +3,8 @@
  */
 package com.zhixiangli.codesimilarity;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.zhixiangli.codesimilarity.common.CodeUtils;
 import com.zhixiangli.codesimilarity.common.SimilarityConstants;
 
@@ -26,7 +28,7 @@ public class CodeSimilarity {
      * @return similarity, which is in [0, 1]
      */
     public static double get(String a, String b) {
-        return get(a, b, SimilarityAlgFactory.getInstance(SimilarityConstants.STRATEGY));
+        return get(a, b, SimilarityAlgorithmFactory.getInstance(SimilarityConstants.STRATEGY));
     }
     
     /**
@@ -37,15 +39,17 @@ public class CodeSimilarity {
      *            source code
      * @param b
      *            anathor source code
-     * @param smililarityAlg
+     * @param similarityAlgorithm
      *            the algorithm to calculate code similarity
      * @return similarity, which is in [0, 1]
      */
-    public static double get(String a, String b, SimilarityAlg smililarityAlg) {
-        if (null == a || null == b) {
+    public static double get(String a, String b, SimilarityAlgorithm similarityAlgorithm) {
+        if (StringUtils.isEmpty(a) || StringUtils.isEmpty(b)) {
             return 0;
         }
-        return smililarityAlg.get(CodeUtils.removeComment(a), CodeUtils.removeComment(b));
+        String aAfter = CodeUtils.removeComments(a);
+        String bAfter = CodeUtils.removeComments(b);
+        return similarityAlgorithm.get(aAfter, bAfter);
     }
     
 }

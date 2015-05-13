@@ -10,7 +10,7 @@ package com.zhixiangli.codesimilarity;
  * @author lizhixiang
  *
  */
-public interface SimilarityAlg {
+public interface SimilarityAlgorithm {
     
     /**
      * 

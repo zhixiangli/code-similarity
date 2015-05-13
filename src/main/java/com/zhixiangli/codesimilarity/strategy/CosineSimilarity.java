@@ -4,13 +4,16 @@
 package com.zhixiangli.codesimilarity.strategy;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import com.zhixiangli.codesimilarity.SimilarityAlg;
+import org.apache.commons.collections4.CollectionUtils;
+
+import com.zhixiangli.codesimilarity.SimilarityAlgorithm;
 
 /**
  * calculate cosine similarity of two codes
@@ -18,7 +21,7 @@ import com.zhixiangli.codesimilarity.SimilarityAlg;
  * @author lizhixiang
  *
  */
-public class CosineSimilarity implements SimilarityAlg {
+public class CosineSimilarity implements SimilarityAlgorithm {
     
     /**
      * to match variable
@@ -33,17 +36,17 @@ public class CosineSimilarity implements SimilarityAlg {
      */
     @Override
     public double get(String a, String b) {
-        List<String> x = getFeature(a);
-        if (x.size() == 0) {
+        List<String> aList = getTerms(a);
+        if (CollectionUtils.isEmpty(aList)) {
             return 0;
         }
         
-        List<String> y = getFeature(b);
-        if (y.size() == 0) {
+        List<String> bList = getTerms(b);
+        if (CollectionUtils.isEmpty(bList)) {
             return 0;
         }
         
-        return this.getCosine(this.getOccurrence(x), this.getOccurrence(y));
+        return this.getCosine(this.getFrequency(aList), this.getFrequency(bList));
     }
     
     /**
@@ -54,25 +57,25 @@ public class CosineSimilarity implements SimilarityAlg {
      *            source code
      * @return list of variable names
      */
-    private List<String> getFeature(String a) {
-        List<String> list = new ArrayList<>();
+    private List<String> getTerms(String a) {
+        List<String> termsList = new ArrayList<>();
         Matcher m = FEATURE_PATTERN.matcher(a);
         while (m.find()) {
-            list.add(m.group());
+            termsList.add(m.group());
         }
-        return list;
+        return termsList;
     }
     
     /**
      * 
      * calculate the number of occurrences of each strings
      * 
-     * @param list
+     * @param termsList
      *            strings
      * @return the number of occurrences of each strings
      */
-    private Map<String, Integer> getOccurrence(List<String> list) {
-        return list.parallelStream().collect(
+    private Map<String, Integer> getFrequency(List<String> termsList) {
+        return termsList.parallelStream().collect(
             Collectors.groupingBy(str -> str, Collectors.summingInt(str -> 1)));
     }
     
@@ -80,23 +83,26 @@ public class CosineSimilarity implements SimilarityAlg {
      * 
      * calculate the cosine of two vectors
      * 
-     * @param x
+     * @param aFrequency
      *            vector
-     * @param y
+     * @param bFrequency
      *            another vector
      * @return cosine value
      */
-    private double getCosine(Map<String, Integer> x, Map<String, Integer> y) {
-        double up = x.keySet().parallelStream().filter(key -> null != y.get(key))
-            .collect(Collectors.summarizingDouble(key -> 1.0 * x.get(key) * y.get(key))).getSum();
-        
-        double a = x.keySet().parallelStream()
-            .collect(Collectors.summarizingDouble(key -> 1.0 * x.get(key) * x.get(key))).getSum();
-        
-        double b = y.keySet().parallelStream()
-            .collect(Collectors.summarizingDouble(key -> 1.0 * y.get(key) * y.get(key))).getSum();
-        
+    private double getCosine(Map<String, Integer> aFrequency, Map<String, Integer> bFrequency) {
+        double up = aFrequency
+            .keySet()
+            .parallelStream()
+            .filter(key -> null != bFrequency.get(key))
+            .collect(Collectors.summarizingDouble(key -> aFrequency.get(key) * bFrequency.get(key)))
+            .getSum();
+        double a = this.getQuadraticSum(aFrequency.values());
+        double b = this.getQuadraticSum(bFrequency.values());
         return up / Math.sqrt(a * b);
     }
     
+    private double getQuadraticSum(Collection<Integer> collection) {
+        return collection.parallelStream().collect(Collectors.summarizingDouble(x -> x * x))
+            .getSum();
+    }
 }

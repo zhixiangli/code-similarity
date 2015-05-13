@@ -3,7 +3,9 @@
  */
 package com.zhixiangli.codesimilarity.strategy;
 
-import com.zhixiangli.codesimilarity.SimilarityAlg;
+import org.apache.commons.lang3.StringUtils;
+
+import com.zhixiangli.codesimilarity.SimilarityAlgorithm;
 import com.zhixiangli.codesimilarity.common.CodeUtils;
 
 /**
@@ -12,7 +14,7 @@ import com.zhixiangli.codesimilarity.common.CodeUtils;
  * @author lizhixiang
  *
  */
-public class LCS implements SimilarityAlg {
+public class LCS implements SimilarityAlgorithm {
     
     /*
      * (non-Javadoc)
@@ -22,16 +24,17 @@ public class LCS implements SimilarityAlg {
      */
     @Override
     public double get(String a, String b) {
-        String s = CodeUtils.removeBlank(a);
-        if (0 == s.length()) {
+        String aAfter = CodeUtils.removeBlank(a);
+        if (StringUtils.isEmpty(aAfter)) {
             return 0;
         }
         
-        String t = CodeUtils.removeBlank(b);
-        if (0 == t.length()) {
+        String bAfter = CodeUtils.removeBlank(b);
+        if (StringUtils.isEmpty(bAfter)) {
             return 0;
         }
-        return 2.0 * this.getLCS(s, t) / (s.length() + t.length());
+        
+        return 2.0 * this.getLCS(aAfter, bAfter) / (aAfter.length() + bAfter.length());
     }
     
     /**
@@ -45,11 +48,11 @@ public class LCS implements SimilarityAlg {
      * @return longest common subsequence
      */
     private int getLCS(String a, String b) {
-        int la = a.length();
-        int lb = b.length();
-        int[][] dp = new int[la + 1][lb + 1];
-        for (int i = 1; i <= la; i++) {
-            for (int j = 1; j <= lb; j++) {
+        int aLength = a.length();
+        int bLength = b.length();
+        int[][] dp = new int[aLength + 1][bLength + 1];
+        for (int i = 1; i <= aLength; i++) {
+            for (int j = 1; j <= bLength; j++) {
                 if (a.charAt(i - 1) == b.charAt(j - 1)) {
                     dp[i][j] = dp[i - 1][j - 1] + 1;
                 } else {
@@ -57,6 +60,6 @@ public class LCS implements SimilarityAlg {
                 }
             }
         }
-        return dp[la][lb];
+        return dp[aLength][bLength];
     }
 }
