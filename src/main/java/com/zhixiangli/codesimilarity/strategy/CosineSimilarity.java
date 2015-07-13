@@ -75,8 +75,7 @@ public class CosineSimilarity implements SimilarityAlgorithm {
      * @return the number of occurrences of each strings
      */
     private Map<String, Integer> getFrequency(List<String> termsList) {
-        return termsList.parallelStream().collect(
-            Collectors.groupingBy(str -> str, Collectors.summingInt(str -> 1)));
+        return termsList.parallelStream().collect(Collectors.groupingBy(str -> str, Collectors.summingInt(str -> 1)));
     }
     
     /**
@@ -90,19 +89,14 @@ public class CosineSimilarity implements SimilarityAlgorithm {
      * @return cosine value
      */
     private double getCosine(Map<String, Integer> aFrequency, Map<String, Integer> bFrequency) {
-        double up = aFrequency
-            .keySet()
-            .parallelStream()
-            .filter(key -> null != bFrequency.get(key))
-            .collect(Collectors.summarizingDouble(key -> aFrequency.get(key) * bFrequency.get(key)))
-            .getSum();
+        double up = aFrequency.keySet().parallelStream().filter(key -> bFrequency.containsKey(key))
+            .collect(Collectors.summarizingDouble(key -> aFrequency.get(key) * bFrequency.get(key))).getSum();
         double a = this.getQuadraticSum(aFrequency.values());
         double b = this.getQuadraticSum(bFrequency.values());
         return up / Math.sqrt(a * b);
     }
     
     private double getQuadraticSum(Collection<Integer> collection) {
-        return collection.parallelStream().collect(Collectors.summarizingDouble(x -> x * x))
-            .getSum();
+        return collection.stream().reduce(0, (result, x) -> result + x * x);
     }
 }

@@ -73,7 +73,7 @@ public class CodeUtils {
         if (StringUtils.isEmpty(before)) {
             return before;
         }
-        return before.codePoints().filter(x -> !Character.isWhitespace(x))
-            .mapToObj(x -> String.valueOf((char) x)).collect(Collectors.joining());
+        return before.codePoints().filter(x -> !Character.isWhitespace(x)).mapToObj(x -> String.valueOf((char) x))
+            .collect(Collectors.joining());
     }
 }
