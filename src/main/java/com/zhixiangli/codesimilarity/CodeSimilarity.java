@@ -3,9 +3,10 @@
  */
 package com.zhixiangli.codesimilarity;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.zhixiangli.codesimilarity.common.CodeUtils;
-import com.zhixiangli.codesimilarity.common.SimilarityConstants;
-import com.zhixiangli.codesimilarity.common.CommonUtils;
+import com.zhixiangli.codesimilarity.strategy.LongestCommonSubsequence;
 
 /**
  * 
@@ -16,39 +17,45 @@ import com.zhixiangli.codesimilarity.common.CommonUtils;
  */
 public class CodeSimilarity {
 
-	/**
-	 * 
-	 * get code similarity
-	 * 
-	 * @param a
-	 *            source code
-	 * @param b
-	 *            anathor source code
-	 * @return similarity, which is in [0, 1]
-	 */
-	public static double get(String a, String b) {
-		return get(a, b, SimilarityAlgorithmFactory.getInstance(SimilarityConstants.STRATEGY));
-	}
+    /**
+     * algorithm implement
+     */
+    private SimilarityAlgorithm similarityAlgorithm;
 
-	/**
-	 * 
-	 * get code similarity
-	 * 
-	 * @param a
-	 *            source code
-	 * @param b
-	 *            anathor source code
-	 * @param similarityAlgorithm
-	 *            the algorithm to calculate code similarity
-	 * @return similarity, which is in [0, 1]
-	 */
-	public static double get(String a, String b, SimilarityAlgorithm similarityAlgorithm) {
-		if (CommonUtils.isEmpty(a) || CommonUtils.isEmpty(b)) {
-			return 0;
-		}
-		String aAfter = CodeUtils.removeComments(a);
-		String bAfter = CodeUtils.removeComments(b);
-		return similarityAlgorithm.get(aAfter, bAfter);
-	}
+    public CodeSimilarity() {
+        this(new LongestCommonSubsequence());
+    }
+
+    /**
+     * @param similarityAlgorithm
+     */
+    public CodeSimilarity(SimilarityAlgorithm similarityAlgorithm) {
+        this.similarityAlgorithm = similarityAlgorithm;
+    }
+
+    /**
+     * 
+     * get code similarity
+     * 
+     * @param a source code
+     * @param b anathor source code
+     * @param similarityAlgorithm the algorithm to calculate code similarity
+     * @return similarity, which is in [0, 1]
+     */
+    public double get(String a, String b) {
+        if (StringUtils.isEmpty(a) || StringUtils.isEmpty(b)) {
+            return 0;
+        }
+        String aAfter = CodeUtils.removeComments(a);
+        String bAfter = CodeUtils.removeComments(b);
+        return similarityAlgorithm.get(aAfter, bAfter);
+    }
+
+    /**
+     * @param similarityAlgorithm the similarityAlgorithm to set
+     */
+    public void setSimilarityAlgorithm(SimilarityAlgorithm similarityAlgorithm) {
+        this.similarityAlgorithm = similarityAlgorithm;
+    }
 
 }
