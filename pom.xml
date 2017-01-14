@@ -4,9 +4,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.zhixiangli</groupId>
 	<artifactId>code-similarity</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<name>code similarity</name>
-	<description>code similarity detection</description>
+	<description>code similarity detection, calculate program similarity</description>
 	<url>https://github.com/zhixiangli/code-similarity</url>
 
 	<licenses>
