@@ -14,7 +14,7 @@ import com.zhixiangli.code.similarity.common.CodeUtils;
  * @author lizhixiang
  *
  */
-public class LongestCommonSubsequence implements SimilarityAlgorithm {
+public class LongestCommonSubsequenceSimilarity implements SimilarityAlgorithm {
 
     /*
      * (non-Javadoc)

@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.zhixiangli.code.similarity.SimilarityAlgorithm;
-import com.zhixiangli.code.similarity.strategy.LongestCommonSubsequence;
+import com.zhixiangli.code.similarity.strategy.LongestCommonSubsequenceSimilarity;
 
 /**
  * @author lizhixiang
@@ -57,7 +57,7 @@ public class LongestCommonSubsequenceTest {
      */
     @Before
     public void setUp() throws Exception {
-        alg = new LongestCommonSubsequence();
+        alg = new LongestCommonSubsequenceSimilarity();
     }
 
 }

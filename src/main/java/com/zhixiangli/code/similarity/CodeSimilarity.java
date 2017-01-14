@@ -6,7 +6,7 @@ package com.zhixiangli.code.similarity;
 import org.apache.commons.lang3.StringUtils;
 
 import com.zhixiangli.code.similarity.common.CodeUtils;
-import com.zhixiangli.code.similarity.strategy.LongestCommonSubsequence;
+import com.zhixiangli.code.similarity.strategy.LongestCommonSubsequenceSimilarity;
 
 /**
  * 
@@ -23,7 +23,7 @@ public class CodeSimilarity {
     private SimilarityAlgorithm similarityAlgorithm;
 
     public CodeSimilarity() {
-        this(new LongestCommonSubsequence());
+        this(new LongestCommonSubsequenceSimilarity());
     }
 
     /**
