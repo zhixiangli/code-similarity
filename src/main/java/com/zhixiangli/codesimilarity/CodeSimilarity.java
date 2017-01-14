@@ -27,7 +27,7 @@ public class CodeSimilarity {
     }
 
     /**
-     * @param similarityAlgorithm
+     * @param similarityAlgorithm algorithm to be used.
      */
     public CodeSimilarity(SimilarityAlgorithm similarityAlgorithm) {
         this.similarityAlgorithm = similarityAlgorithm;
@@ -39,7 +39,6 @@ public class CodeSimilarity {
      * 
      * @param a source code
      * @param b anathor source code
-     * @param similarityAlgorithm the algorithm to calculate code similarity
      * @return similarity, which is in [0, 1]
      */
     public double get(String a, String b) {
