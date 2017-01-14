@@ -1,11 +1,13 @@
 /**
  * 
  */
-package com.zhixiangli.codesimilarity.common;
+package com.zhixiangli.code.similarity.common;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import com.zhixiangli.code.similarity.common.CodeUtils;
 
 /**
  * @author lizhixiang

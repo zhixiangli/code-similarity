@@ -1,12 +1,12 @@
 /**
  * 
  */
-package com.zhixiangli.codesimilarity;
+package com.zhixiangli.code.similarity;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.zhixiangli.codesimilarity.common.CodeUtils;
-import com.zhixiangli.codesimilarity.strategy.LongestCommonSubsequence;
+import com.zhixiangli.code.similarity.common.CodeUtils;
+import com.zhixiangli.code.similarity.strategy.LongestCommonSubsequence;
 
 /**
  * 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.zhixiangli.codesimilarity.strategy;
+package com.zhixiangli.code.similarity.strategy;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 
-import com.zhixiangli.codesimilarity.SimilarityAlgorithm;
+import com.zhixiangli.code.similarity.SimilarityAlgorithm;
 
 /**
  * calculate cosine similarity of two codes

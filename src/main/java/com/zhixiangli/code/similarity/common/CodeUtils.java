@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.zhixiangli.codesimilarity.common;
+package com.zhixiangli.code.similarity.common;
 
 import java.util.stream.Collectors;
 

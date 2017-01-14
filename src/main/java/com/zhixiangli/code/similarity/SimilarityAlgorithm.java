@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.zhixiangli.codesimilarity;
+package com.zhixiangli.code.similarity;
 
 /**
  * 

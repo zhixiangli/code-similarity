@@ -1,12 +1,12 @@
 /**
  * 
  */
-package com.zhixiangli.codesimilarity.strategy;
+package com.zhixiangli.code.similarity.strategy;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.zhixiangli.codesimilarity.SimilarityAlgorithm;
-import com.zhixiangli.codesimilarity.common.CodeUtils;
+import com.zhixiangli.code.similarity.SimilarityAlgorithm;
+import com.zhixiangli.code.similarity.common.CodeUtils;
 
 /**
  * calculate longest common subsequence of two codes

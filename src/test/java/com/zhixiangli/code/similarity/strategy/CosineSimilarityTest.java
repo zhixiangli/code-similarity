@@ -1,14 +1,15 @@
 /**
  * 
  */
-package com.zhixiangli.codesimilarity.strategy;
+package com.zhixiangli.code.similarity.strategy;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.zhixiangli.codesimilarity.SimilarityAlgorithm;
+import com.zhixiangli.code.similarity.SimilarityAlgorithm;
+import com.zhixiangli.code.similarity.strategy.CosineSimilarity;
 
 /**
  * TODO
