@@ -2,7 +2,9 @@ code-similarity
 ===============
 
 
-**Code Similarity** provides some implementations of similarity detection algorithm.
+**Code Similarity** provides some implementations of similarity detection algorithm, including **Longest Common Subsequence** & **Cosine Distance**
+
+It used to work on data structure courses & exam code check.
 
 
 ## Environmental Requirements
