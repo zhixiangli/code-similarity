@@ -2,24 +2,24 @@ code-similarity
 ===============
 
 
-Provides a implementation code similarity detection.
+**Code Similarity** provides some implementations of similarity detection algorithm.
 
 
-##Environmental Requirements
+## Environmental Requirements
 
 JDK 1.8+
 
 
-##Instructions
+## Instructions
 
-###Add Dependency
+### Add Dependency
 	<dependency>
 		<groupId>com.zhixiangli</groupId>
 		<artifactId>code-similarity</artifactId>
 		<version>0.0.2</version>
 	</dependency>
 
-###Example
+### Example
     String a = "public static void main(String[] args) {System.out.println(1);}";
     String b = "public static void main(String[] args) {System.out.println(2);}";
 
