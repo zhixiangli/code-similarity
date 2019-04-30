@@ -1,39 +1,39 @@
 /**
- * 
+ *
  */
 package com.zhixiangli.code.similarity.common;
 
-import java.util.stream.Collectors;
-
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.stream.Collectors;
 
 /**
  * utils to process source code
- * 
+ *
  * @author lizhixiang
  *
  */
 public class CodeUtils {
 
     /**
-     * 
+     *
      * remove comments
-     * 
+     *
      * @param before source code before processing
      * @return source code after processing
      */
-    public static String removeComments(String before) {
+    public static String removeComments(final String before) {
         return CodeUtils.removeSingleLineComments(CodeUtils.removeBlockComments(before));
     }
 
-    public static String removeBlockComments(String before) {
-        StringBuilder after = new StringBuilder();
-        int size = before.length();
+    public static String removeBlockComments(final String before) {
+        final StringBuilder after = new StringBuilder();
+        final int size = before.length();
         int flag = 0;
         for (int i = 0; i < size; ++i) {
-            if (i < size - 1 && before.charAt(i) == '/' && before.charAt(i + 1) == '*') {
+            if ((i < (size - 1)) && (before.charAt(i) == '/') && (before.charAt(i + 1) == '*')) {
                 ++flag;
-            } else if (i > 0 && before.charAt(i - 1) == '*' && before.charAt(i) == '/') {
+            } else if ((i > 0) && (before.charAt(i - 1) == '*') && (before.charAt(i) == '/')) {
                 --flag;
             } else if (flag == 0) {
                 after.append(before.charAt(i));
@@ -42,13 +42,13 @@ public class CodeUtils {
         return after.toString();
     }
 
-    public static String removeSingleLineComments(String before) {
-        StringBuilder after = new StringBuilder();
-        int size = before.length();
+    public static String removeSingleLineComments(final String before) {
+        final StringBuilder after = new StringBuilder();
+        final int size = before.length();
         for (int i = 0; i < size; ++i) {
-            if (i < size - 1 && before.charAt(i) == '/' && before.charAt(i + 1) == '/') {
+            if ((i < (size - 1)) && (before.charAt(i) == '/') && (before.charAt(i + 1) == '/')) {
                 for (++i; i < size; ++i) {
-                    String charString = String.valueOf(before.charAt(i));
+                    final String charString = String.valueOf(before.charAt(i));
                     if (StringUtils.LF.equals(charString) || StringUtils.CR.equals(charString)) {
                         break;
                     }
@@ -61,13 +61,13 @@ public class CodeUtils {
     }
 
     /**
-     * 
+     *
      * remove blank
-     * 
+     *
      * @param before source code before processing
      * @return source code after processing
      */
-    public static String removeBlank(String before) {
+    public static String removeBlank(final String before) {
         if (StringUtils.isEmpty(before)) {
             return before;
         }

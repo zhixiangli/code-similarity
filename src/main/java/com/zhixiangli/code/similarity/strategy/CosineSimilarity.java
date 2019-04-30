@@ -1,7 +1,10 @@
 /**
- * 
+ *
  */
 package com.zhixiangli.code.similarity.strategy;
+
+import com.zhixiangli.code.similarity.SimilarityAlgorithm;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,13 +14,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections4.CollectionUtils;
-
-import com.zhixiangli.code.similarity.SimilarityAlgorithm;
-
 /**
  * calculate cosine similarity of two codes
- * 
+ *
  * @author lizhixiang
  *
  */
@@ -30,34 +29,34 @@ public class CosineSimilarity implements SimilarityAlgorithm {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.zhixiangli.codesimilarity.SimilarityAlg#get(java.lang.String, java.lang.String)
      */
     @Override
-    public double get(String a, String b) {
-        List<String> aList = getTerms(a);
+    public double get(final String a, final String b) {
+        final List<String> aList = getTerms(a);
         if (CollectionUtils.isEmpty(aList)) {
             return 0;
         }
 
-        List<String> bList = getTerms(b);
+        final List<String> bList = getTerms(b);
         if (CollectionUtils.isEmpty(bList)) {
             return 0;
         }
 
-        return this.getCosine(this.getFrequency(aList), this.getFrequency(bList));
+        return getCosine(getFrequency(aList), getFrequency(bList));
     }
 
     /**
-     * 
+     *
      * get all variable names
-     * 
+     *
      * @param a source code
      * @return list of variable names
      */
-    private List<String> getTerms(String a) {
-        List<String> termsList = new ArrayList<>();
-        Matcher m = FEATURE_PATTERN.matcher(a);
+    private List<String> getTerms(final String a) {
+        final List<String> termsList = new ArrayList<>();
+        final Matcher m = FEATURE_PATTERN.matcher(a);
         while (m.find()) {
             termsList.add(m.group());
         }
@@ -65,33 +64,33 @@ public class CosineSimilarity implements SimilarityAlgorithm {
     }
 
     /**
-     * 
+     *
      * calculate the number of occurrences of each strings
-     * 
+     *
      * @param termsList strings
      * @return the number of occurrences of each strings
      */
-    private Map<String, Integer> getFrequency(List<String> termsList) {
+    private Map<String, Integer> getFrequency(final List<String> termsList) {
         return termsList.parallelStream().collect(Collectors.groupingBy(str -> str, Collectors.summingInt(str -> 1)));
     }
 
     /**
-     * 
+     *
      * calculate the cosine of two vectors
-     * 
+     *
      * @param aFrequency vector
      * @param bFrequency another vector
      * @return cosine value
      */
-    private double getCosine(Map<String, Integer> aFrequency, Map<String, Integer> bFrequency) {
-        double up = aFrequency.keySet().parallelStream().filter(key -> bFrequency.containsKey(key))
+    private double getCosine(final Map<String, Integer> aFrequency, final Map<String, Integer> bFrequency) {
+        final double up = aFrequency.keySet().parallelStream().filter(bFrequency::containsKey)
                 .collect(Collectors.summarizingDouble(key -> aFrequency.get(key) * bFrequency.get(key))).getSum();
-        double a = this.getQuadraticSum(aFrequency.values());
-        double b = this.getQuadraticSum(bFrequency.values());
+        final double a = getQuadraticSum(aFrequency.values());
+        final double b = getQuadraticSum(bFrequency.values());
         return up / Math.sqrt(a * b);
     }
 
-    private double getQuadraticSum(Collection<Integer> collection) {
-        return collection.stream().reduce(0, (result, x) -> result + x * x);
+    private double getQuadraticSum(final Collection<Integer> collection) {
+        return collection.stream().reduce(0, (result, x) -> result + (x * x));
     }
 }

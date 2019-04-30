@@ -1,13 +1,11 @@
 /**
- * 
+ *
  */
 package com.zhixiangli.code.similarity;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
-import com.zhixiangli.code.similarity.CodeSimilarity;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author lizhixiang
@@ -15,7 +13,7 @@ import com.zhixiangli.code.similarity.CodeSimilarity;
  */
 public class CodeSimilarityTest {
 
-    private CodeSimilarity codeSimilarity = new CodeSimilarity();
+    private final CodeSimilarity codeSimilarity = new CodeSimilarity();
 
     @Test
     public void testGetLCS() {
@@ -48,7 +46,7 @@ public class CodeSimilarityTest {
 
         a = "A,.x?:{}_@$#";
         b = "%^&(()_&^%$#@";
-        assertEquals(2.0 * 3 / (a.length() + b.length()), codeSimilarity.get(a, b), 1e-8);
+        assertEquals((2.0 * 3) / (a.length() + b.length()), codeSimilarity.get(a, b), 1e-8);
 
     }
 }

@@ -1,15 +1,13 @@
 /**
- * 
+ *
  */
 package com.zhixiangli.code.similarity.strategy;
 
-import static org.junit.Assert.*;
-
+import com.zhixiangli.code.similarity.SimilarityAlgorithm;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.zhixiangli.code.similarity.SimilarityAlgorithm;
-import com.zhixiangli.code.similarity.strategy.LongestCommonSubsequenceSimilarity;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author lizhixiang
@@ -49,14 +47,11 @@ public class LongestCommonSubsequenceTest {
 
         a = "A,.x?:{}_@$#";
         b = "%^&(()_&^%$#@";
-        assertEquals(2.0 * 3 / (a.length() + b.length()), alg.get(a, b), 1e-8);
+        assertEquals((2.0 * 3) / (a.length() + b.length()), alg.get(a, b), 1e-8);
     }
 
-    /**
-     * @throws java.lang.Exception
-     */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         alg = new LongestCommonSubsequenceSimilarity();
     }
 

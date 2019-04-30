@@ -1,19 +1,17 @@
 /**
- * 
+ *
  */
 package com.zhixiangli.code.similarity.strategy;
 
-import static org.junit.Assert.*;
-
+import com.zhixiangli.code.similarity.SimilarityAlgorithm;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.zhixiangli.code.similarity.SimilarityAlgorithm;
-import com.zhixiangli.code.similarity.strategy.CosineSimilarity;
+import static org.junit.Assert.assertEquals;
 
 /**
  * TODO
- * 
+ *
  * @author lizhixiang
  *
  */
@@ -46,13 +44,8 @@ public class CosineSimilarityTest {
         assertEquals(1, alg.get(a, b), 1e-8);
     }
 
-    /**
-     * TODO
-     * 
-     * @throws java.lang.Exception
-     */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         alg = new CosineSimilarity();
     }
 
