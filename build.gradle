@@ -77,10 +77,19 @@ publishing {
 }
 
 signing {
+    def isReleaseVersion = !version.endsWith('SNAPSHOT')
     def signingKey = findProperty('signingKey') ?: System.getenv('SIGNING_KEY')
     def signingPassword = findProperty('signingPassword') ?: System.getenv('SIGNING_PASSWORD')
+
+    required = isReleaseVersion && gradle.taskGraph.allTasks.any { task ->
+        task.name == 'publish' || task.name.startsWith('publish')
+    }
+
     if (signingKey) {
         useInMemoryPgpKeys(signingKey, signingPassword)
-        sign publishing.publications.mavenJava
+    } else {
+        useGpgCmd()
     }
+
+    sign publishing.publications.mavenJava
 }
