@@ -1,0 +1,86 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+}
+
+group = 'com.zhixiangli'
+version = '0.0.2'
+description = 'code similarity detection, calculate program similarity'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+    withSourcesJar()
+    withJavadocJar()
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.apache.commons:commons-lang3:3.17.0'
+    implementation 'org.apache.commons:commons-collections4:4.4'
+    testImplementation 'junit:junit:4.13.2'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Test).configureEach {
+    useJUnit()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            pom {
+                name = 'code similarity'
+                description = project.description
+                url = 'https://github.com/zhixiangli/code-similarity'
+                licenses {
+                    license {
+                        name = 'The Apache Software License, Version 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        name = 'zhixiangli'
+                        email = 'lzx.inf@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/zhixiangli/code-similarity.git'
+                    developerConnection = 'scm:git:https://github.com/zhixiangli/code-similarity.git'
+                    url = 'https://github.com/zhixiangli/code-similarity'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = 'ossrh'
+            url = uri(version.endsWith('SNAPSHOT')
+                    ? 'https://oss.sonatype.org/content/repositories/snapshots'
+                    : 'https://oss.sonatype.org/service/local/staging/deploy/maven2/')
+            credentials {
+                username = findProperty('ossrhUsername') ?: System.getenv('OSSRH_USERNAME')
+                password = findProperty('ossrhPassword') ?: System.getenv('OSSRH_PASSWORD')
+            }
+        }
+    }
+}
+
+signing {
+    def signingKey = findProperty('signingKey') ?: System.getenv('SIGNING_KEY')
+    def signingPassword = findProperty('signingPassword') ?: System.getenv('SIGNING_PASSWORD')
+    if (signingKey) {
+        useInMemoryPgpKeys(signingKey, signingPassword)
+        sign publishing.publications.mavenJava
+    }
+}

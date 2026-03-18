@@ -9,17 +9,34 @@ It used to work on data structure courses & exam code check.
 
 ## Environmental Requirements
 
-JDK 1.8+
+JDK 17+
 
 
 ## Instructions
 
+### Build & Test
+
+```bash
+./gradlew test
+```
+
 ### Add Dependency
-	<dependency>
-		<groupId>com.zhixiangli</groupId>
-		<artifactId>code-similarity</artifactId>
-		<version>0.0.2</version>
-	</dependency>
+
+Gradle:
+
+```groovy
+implementation 'com.zhixiangli:code-similarity:0.0.2'
+```
+
+Maven:
+
+```xml
+<dependency>
+    <groupId>com.zhixiangli</groupId>
+    <artifactId>code-similarity</artifactId>
+    <version>0.0.2</version>
+</dependency>
+```
 
 ### Example
     String a = "public static void main(String[] args) {System.out.println(1);}";
